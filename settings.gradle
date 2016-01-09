@@ -1,0 +1,17 @@
+rootProject.name = 'blog-cloud'
+
+['client', 'server', 'api'].each {
+    def projectDir = new File(rootDir, it)
+
+    // 만약 그룹디렉터리가 없으면 생성한다.
+    if( !projectDir.exists() ) {
+        projectDir.mkdirs()
+    }
+
+    // 모듈 그룹 디렉터리 하위에 디렉터리가 있으면 서브프로젝트로 등록한다.
+    projectDir.eachDir { dir ->
+        include ":${it}-${dir.name}"
+        project(":${it}-${dir.name}").projectDir = new File(projectDir.absolutePath, dir.name);
+    }
+}
+
