@@ -2,6 +2,8 @@
 
 ## Blog 1
 
+Spring-cloud 를 이용한 Configuration Server 와 Eureka Server　구성
+
 **1. Git Clone**
 
 ```
