@@ -2,15 +2,24 @@
 
 ## Blog 1
 
-**1. 프로젝트 빌드하는 법**
+**1. Git Clone**
+
+```
+git clone https://github.com/roadkh/blog-cloud-sample.git
+git checkout blog_01
+```
+
+**2. 프로젝트 빌드하는 법**
 
 ```
 cd {Project Base Dir} 
 ./gradlew build
 ```
 
-**2. 실행하는 법**
+**3. 실행하는 법**
+
 세개의 Terminal 을 띄운후에 하는 것이 편함.
+
 ```
 ##Terminal 1
 cd {Projcet Base Dir}/server/discovery/build/libs
