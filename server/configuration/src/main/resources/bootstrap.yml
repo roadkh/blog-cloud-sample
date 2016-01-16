@@ -1,0 +1,14 @@
+
+spring:
+  application:
+    name: 'config-server'
+  profiles:
+    active: 'cloud'
+  cloud:
+    config:
+      server:
+        git:
+#          uri: /home/road/media/Dev/workspace/pilot/blog-cloud/blog-cloud-sample-config/ #local git
+          uri: https://github.com/roadkh/blog-cloud-sample-config/ #remote public git
+server:
+  port: 8888
