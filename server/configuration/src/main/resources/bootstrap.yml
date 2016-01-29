@@ -8,7 +8,8 @@ spring:
     config:
       server:
         git:
-#          uri: /home/road/media/Dev/workspace/pilot/blog-cloud/blog-cloud-sample-config/ #local git
           uri: https://github.com/roadkh/blog-cloud-sample-config/ #remote public git
+#          uri: /home/road/media/Dev/workspace/pilot/blog-cloud/blog-cloud-sample-config/ #local git
+
 server:
   port: 8888
