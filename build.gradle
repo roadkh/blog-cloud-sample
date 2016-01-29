@@ -40,6 +40,7 @@ task wrapper(type: Wrapper) {
 
 subprojects { subproject ->
     apply plugin: 'java'
+    apply plugin: 'spring-boot'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
