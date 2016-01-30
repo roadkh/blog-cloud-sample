@@ -7,4 +7,4 @@ spring:
 #        service-id: config-server
       failFast: true
   application:
-    name: product
+    name: composite
