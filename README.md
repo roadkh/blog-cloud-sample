@@ -2,7 +2,8 @@
 
 ## Blog 1
 
-Spring-cloud 를 이용한 Configuration Server 와 Eureka Server　구성
+Spring-cloud 를 이용한 Configuration Server와 Eureka Server 를 이용한 실제 사용예제.
+
 
 **1. Git Clone**
 
