@@ -81,7 +81,7 @@ public class ProductCompositieServiceBean implements ProductCompositeService {
 
         product.addReviews(reviews);
 
-        return responseEntity.getBody();
+        return product;
     }
 
     private List<Recommendation> getRecommendationsByProduct(Long productId) {
