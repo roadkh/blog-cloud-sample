@@ -1,6 +1,6 @@
 # blog-cloud-sample
 
-## Blog 2
+## Blog 3
 
 Spring-cloud 를 이용한 Configuration Server와 Eureka Server 를 이용한 실제 사용예제.
 
