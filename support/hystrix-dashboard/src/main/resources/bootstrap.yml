@@ -4,5 +4,4 @@ spring:
       uri: http://localhost:8888
       failFast: true
   application:
-    name: edge-server
-
+    name: hystrix-dashboard

@@ -1,5 +1,6 @@
 package com.road.pilot.blog.api.composite.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.road.pilot.blog.api.composite.model.Product;
 import com.road.pilot.blog.api.composite.model.Recommendation;
 import com.road.pilot.blog.api.composite.model.Review;
@@ -21,8 +22,8 @@ import java.util.*;
  * Created by road on 16. 1. 30.
  */
 @Service
-public class ProductCompositieServiceBean implements ProductCompositeService {
-    private static final Logger logger = LoggerFactory.getLogger(ProductCompositieServiceBean.class);
+public class ProductCompositeServiceBean implements ProductCompositeService {
+    private static final Logger logger = LoggerFactory.getLogger(ProductCompositeServiceBean.class);
 
     /**
      * Core API 서비스들에 연결하여 데이터를 가져올 각 URL.
@@ -35,10 +36,32 @@ public class ProductCompositieServiceBean implements ProductCompositeService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ProductCompositieServiceBean() {
+    public ProductCompositeServiceBean() {
         logger.debug("Product Composite Service Implementation Initialized");
     }
 
+    /**
+     * Product list 에 대한 fallback method
+     * @param page
+     * @param size
+     * @param sort
+     * @return
+     */
+    public Page<Product> getDefaultProducts(int page, int size, String sort) {
+        logger.debug("page : {}, size : {}", page, size);
+
+        return new PageImplBean<Product>();
+    }
+
+    /**
+     * Product list 를 조회하는 API Service Method.
+     *
+     * @param page
+     * @param size
+     * @param sort
+     * @return
+     */
+    @HystrixCommand(fallbackMethod = "getDefaultProducts")
     @Override
     public Page<Product> getProducts(int page, int size, String sort) {
         String uri = new StringBuffer(PRODUCT_API_URL).append("/?size={size}&page={page}&sort={sort}").toString();
@@ -58,6 +81,26 @@ public class ProductCompositieServiceBean implements ProductCompositeService {
         return responseEntity.getBody();
     }
 
+    /**
+     * Product 상세에 대한 fallback method.
+     * 요청한 아이디를 가지고 나머지 정보다 모두 없는 객체를 리턴하도록 처리하였음.
+     *
+     * @param id
+     * @return
+     */
+    public Product getDefaultProduct(Long id) {
+        logger.debug("Request product id : {}. but return default result.");
+        return new Product(id, "", 0d, new ArrayList<>(), new ArrayList<>());
+    }
+
+
+    /**
+     * Product 상세 정보를 조회하는 API Service Method.
+     *
+     * @param id
+     * @return
+     */
+    @HystrixCommand(fallbackMethod = "getDefaultProduct")
     @Override
     public Product getProductById(Long id) {
 
@@ -69,22 +112,39 @@ public class ProductCompositieServiceBean implements ProductCompositeService {
             return null;
         }
 
-        Product product = responseEntity.getBody();
+        // Hystrix fallback을 정상적으로 적용하기 위해서 Controller로 로직을 이전함.
+//        Product product = responseEntity.getBody();
+//
+//        Long productId = product.getId();
+//
+//        List<Recommendation> recommendations = getRecommendationsByProduct(productId);
+//
+//        product.addRecommenations(recommendations);
+//
+//        List<Review> reviews = getReviewsByProduct(productId);
+//
+//        product.addReviews(reviews);
 
-        Long productId = product.getId();
-
-        List<Recommendation> recommendations = getRecommendationsByProduct(productId);
-
-        product.addRecommenations(recommendations);
-
-        List<Review> reviews = getReviewsByProduct(productId);
-
-        product.addReviews(reviews);
-
-        return product;
+        return responseEntity.getBody();
     }
 
-    private List<Recommendation> getRecommendationsByProduct(Long productId) {
+    /**
+     * 빈 Recommendation list 를 리턴하는 fallback method
+     * @param productId
+     * @return
+     */
+    public List<Recommendation> getDefaultRecommendations(Long productId) {
+        return new ArrayList<>();
+    }
+
+    /**
+     * product 에 해당하는 Recommendation list 를 조회하는 API Service Method.
+     * @param productId
+     * @return
+     */
+    @HystrixCommand(fallbackMethod = "getDefaultRecommendations")
+    @Override
+    public List<Recommendation> getRecommendationsByProduct(Long productId) {
         String uri = new StringBuffer(RECOMMENDATION_API_URL).append("/byProduct/{productId}").toString();
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("productId", productId);
@@ -97,7 +157,23 @@ public class ProductCompositieServiceBean implements ProductCompositeService {
         return responseEntinty.getBody();
     }
 
-    private List<Review> getReviewsByProduct(Long productId) {
+    /**
+     * 빈 Review list 를 리턴하는 fallback method
+     * @param productId
+     * @return
+     */
+    public List<Review> getDefaultReviews(Long productId) {
+        return new ArrayList<>();
+    }
+
+    /**
+     * product 에 해당하는 Review list 를 조회하는 API Service Method.
+     * @param productId
+     * @return
+     */
+    @HystrixCommand(fallbackMethod = "getDefaultReviews")
+    @Override
+    public List<Review> getReviewsByProduct(Long productId) {
         String uri = new StringBuffer(REVIEW_API_URL).append("/byProduct/{productId}").toString();
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("productId", productId);

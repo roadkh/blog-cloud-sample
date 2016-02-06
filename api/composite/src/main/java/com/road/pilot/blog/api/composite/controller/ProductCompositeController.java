@@ -2,6 +2,8 @@ package com.road.pilot.blog.api.composite.controller;
 
 import com.road.pilot.blog.api.composite.assembler.ProductResourceAssembler;
 import com.road.pilot.blog.api.composite.model.Product;
+import com.road.pilot.blog.api.composite.model.Recommendation;
+import com.road.pilot.blog.api.composite.model.Review;
 import com.road.pilot.blog.api.composite.resource.ProductResource;
 import com.road.pilot.blog.api.composite.service.ProductCompositeService;
 import org.slf4j.Logger;
@@ -15,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by road on 16. 1. 30.
  */
@@ -26,8 +30,8 @@ public class ProductCompositeController {
     @Autowired
     private ProductResourceAssembler productResourceAssembler;
 
-    @Autowired
-    private PagedResourcesAssembler pagedResourcesAssembler;
+//    @Autowired
+//    private PagedResourcesAssembler pagedResourcesAssembler;
 
     @Autowired
     private ProductCompositeService productCompositeService;
@@ -41,7 +45,8 @@ public class ProductCompositeController {
     public ResponseEntity<PagedResources<ProductResource>> getAllProducts(
             @RequestParam(value="page", required = false, defaultValue = "0") int page,
             @RequestParam(value="size", required = false, defaultValue = "10") int size,
-            @RequestParam(value = "sort", required = false, defaultValue = "") String sort) {
+            @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
+            PagedResourcesAssembler pagedResourcesAssembler) {
         Page<Product> products = productCompositeService.getProducts(page, size, sort);
         if (products == null) {
             return new ResponseEntity<PagedResources<ProductResource>>(HttpStatus.NOT_FOUND );
@@ -57,6 +62,16 @@ public class ProductCompositeController {
         if (product == null) {
             return new ResponseEntity<ProductResource>(HttpStatus.NOT_FOUND);
         }
+
+        Long productId = product.getId();
+
+        List<Recommendation> recommendations = productCompositeService.getRecommendationsByProduct(productId);
+
+        product.addRecommenations(recommendations);
+
+        List<Review> reviews = productCompositeService.getReviewsByProduct(productId);
+
+        product.addReviews(reviews);
 
         ProductResource resource = productResourceAssembler.toResource(product);
 

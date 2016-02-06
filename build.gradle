@@ -7,8 +7,8 @@ apply plugin: 'idea'
 
 buildscript {
     repositories {
-        jcenter()
-
+//        jcenter()
+        mavenCentral()
         dependencies {
             classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}"
             classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -19,7 +19,8 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+//        jcenter()
+        mavenCentral()
     }
 
     apply plugin: 'io.spring.dependency-management'
@@ -48,7 +49,8 @@ subprojects { subproject ->
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
     repositories {
-        jcenter()
+//        jcenter()
+        mavenCentral()
     }
 
     dependencies {

@@ -1,6 +1,6 @@
 rootProject.name = 'blog-cloud'
 
-['client', 'server', 'api'].each {
+['client', 'server', 'api', 'support'].each {
     def projectDir = new File(rootDir, it)
 
     // 만약 그룹디렉터리가 없으면 생성한다.
