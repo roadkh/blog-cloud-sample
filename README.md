@@ -103,6 +103,7 @@ java -jar support-turbine.jar
 
 **11. 각종 URL(localhost기준)**
 
+- Eureka 확인 : http://localhost:8761/ 또는 http://localhost:8762/
 - Product List : http://localhost:9000/composite/product/
 - Product : http://localhost:9000/composite/product/{product id}
 - Hystrix dashboard : http://localhost:7979/hystrix
