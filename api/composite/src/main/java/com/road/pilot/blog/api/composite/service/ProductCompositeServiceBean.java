@@ -21,8 +21,8 @@ import java.util.*;
  * Created by road on 16. 1. 30.
  */
 @Service
-public class ProductCompositieServiceBean implements ProductCompositeService {
-    private static final Logger logger = LoggerFactory.getLogger(ProductCompositieServiceBean.class);
+public class ProductCompositeServiceBean implements ProductCompositeService {
+    private static final Logger logger = LoggerFactory.getLogger(ProductCompositeServiceBean.class);
 
     /**
      * Core API 서비스들에 연결하여 데이터를 가져올 각 URL.
@@ -35,7 +35,7 @@ public class ProductCompositieServiceBean implements ProductCompositeService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ProductCompositieServiceBean() {
+    public ProductCompositeServiceBean() {
         logger.debug("Product Composite Service Implementation Initialized");
     }
 

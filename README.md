@@ -22,7 +22,7 @@ git checkout blog_01
 
 ```
 cd {Project Base Dir} 
-./gradlew build
+./gradlew clean build
 ```
 
 **4. Discovery Server와 Configuration Server의 실행**
@@ -76,3 +76,8 @@ java -jar api-composite.jar
 cd {Project Base Dir}/server/edge/build/libs
 java -jar server-edge.jar
 ```
+
+**8. URLs**
+- Eureka 확인 : http://localhost:8761 또는 http://localhost:8762/
+- Product list 확인 : http://localhost:9000/composite/product/
+- Product 상세 확인 : http://localhost:9000/composite/product/{product id: 1~8}
