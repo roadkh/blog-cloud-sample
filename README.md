@@ -11,7 +11,7 @@ RabbitMQ가 필요하며, Hystrix Dashboard를 포함하고 있음.
 
 ```
 git clone https://github.com/roadkh/blog-cloud-sample.git
-git checkout blog_01
+git checkout blog_03
 ```
 
 **2. 개발 및 테스트 환경**
@@ -19,6 +19,7 @@ git checkout blog_01
 - IDEA 15
 - Gradle 2.10
 - Oracle JDK 1.8.0_65
+- RabbitMQ (Docker 설치로 테스트함)
 
 **3. 프로젝트 빌드하는 법**
 
