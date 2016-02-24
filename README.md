@@ -2,7 +2,9 @@
 
 ## Blog 3
 
-Spring-cloud 를 이용한 Configuration Server와 Eureka Server 를 이용한 실제 사용예제.
+Spring-cloud 를 이용한 Configuration Server와 Eureka Server 를 이용한 실제 사용예제에 Hystrix와 Turbine을 추가한 예제.
+
+RabbitMQ가 필요하며, Hystrix Dashboard를 포함하고 있음.
 
 
 **1. Git Clone**
