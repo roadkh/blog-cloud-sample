@@ -9,7 +9,7 @@ Spring-cloud 를 이용한 Configuration Server와 Eureka Server 를 이용한 �
 
 ```
 git clone https://github.com/roadkh/blog-cloud-sample.git
-git checkout blog_01
+git checkout blog_02
 ```
 
 **2. 개발 및 테스트 환경**
