@@ -42,7 +42,9 @@ cd {Project Base Dir}
 ```
 cd {Project Base Dir}
 docker-compose build
-docker-compose up
+docker-compose up -d # backgroud 로 실행
+or
+docker-compose up    # foregroud 로 실행
 ```
 
 **6. 각종 URL(localhost기준)**
