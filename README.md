@@ -1,113 +1,54 @@
 # blog-cloud-sample
 
-## Blog 3
+## Docker, Dockder-compose 를 이용
 
-Spring-cloud 를 이용한 Configuration Server와 Eureka Server 를 이용한 실제 사용예제에 Hystrix와 Turbine을 추가한 예제.
+기존 Blog_03 브랜치를 Docker와 Docker Compose 를 이용하도록 수정.
 
-RabbitMQ가 필요하며, Hystrix Dashboard를 포함하고 있음.
+기본 서비스 이외에 RabbitMQ 도 Docker로 시작되도록 작업이 되어있음.
+
+혹시 로컬에 RabbitMQ 가 돌고 있을 경우에는 해당 Rabbit과 port 충돌이 있을 수 있으니 주의할 것.
 
 
 **1. Git Clone**
 
 ```
 git clone https://github.com/roadkh/blog-cloud-sample.git
-git checkout blog_03
+git checkout blog_cloud_docker
 ```
 
-**2. 개발 및 테스트 환경**
+**2. 사전 준비사항**
+- docker 설치
+	- Mac OS X : https://docs.docker.com/engine/installation/mac/
+	- Windows : https://docs.docker.com/engine/installation/windows/
+	- Ubuntu : https://docs.docker.com/engine/installation/linux/ubuntulinux/
+- docker compose 설치 : https://docs.docker.com/compose/install/ 
+
+**3. 개발 및 테스트 환경**
 - Ubuntu 14.04 LTS
-- IDEA 15
+- IDEA 2016.1.3
 - Gradle 2.10
 - Oracle JDK 1.8.0_65
-- RabbitMQ (Docker 설치로 테스트함)
 
-**3. 프로젝트 빌드하는 법**
+
+**4. 프로젝트 빌드하는 법**
 
 ```
 cd {Project Base Dir} 
-./gradlew build
+./gradlew clean build
 ```
 
-**4. Discovery Server와 Configuration Server의 실행**
-
-세개의 Terminal 을 띄운후에 하는 것이 편함.
+**5. docker compose 를 이용한 실행**
 
 ```
-## Terminal 1 (Discovery peer1)
-cd {Projcet Base Dir}/server/discovery/build/libs
-cp server-discovery.jar server-discovery-peer1.jar
-cp server-discovery.jar server-discovery-peer2.jar
-
-java -jar -Dspring.profiles.active=peer1 server-discovery-peer1.jar
-
-## Terminal 2 (Discovery peer2)
-java -jar -Dspring.profiles.active=peer2 server-discovery-peer2.jar
-
-## Terminal 3 (Configuration)
-cd {Project Base Dir}/server/configuration/build/libs
-java -jar server-configuration.jar
+cd {Project Base Dir}
+docker-compose build
+docker-compose up
 ```
 
-==Configuration Server를 실행한 후에 Configuration Server가 완전히 구동된 것을 확인하고 5번부터 진행필요.==
-
-
-**5. 각 API의 실행**
-
-```
-## Terminal ４ (Product)
-cd {Project Base Dir}/api/product/build/libs
-java -jar api-product.jar
-
-## Terminal 5 (Recommendation)
-cd {Project Base Dir}/api/recommendation/build/libs
-java -jar api-recommendation.jar
-
-## Terminal 6 (Review)
-cd {Project Base Dir}/api/review/build/libs
-java -jar api-review.jar
-```
-
-**6. Composite API의 실행**
-
-```
-## Terminal 6 (Composite)
-cd {Project Base Dir}/api/composite/build/libs
-java -jar api-composite.jar
-```
-
-**7. Edge Server 의 실행**
-
-```
-## Terminal 7 (Edge)
-cd {Project Base Dir}/server/edge/build/libs
-java -jar server-edge.jar
-```
-
-**8. Rabbit Server 실행**
-
-==필요사항으로 각자 Rabbit Server를 준비하여 실행 필요.==
-
-
-**9. Hystrix-dashboard 실행**
-
-```
-## Terminal 8 (Hystrix-dashboard)
-cd {Project Base Dir}/support/hystrix-dashboard/build/libs
-java -jar support-hystrix-dashboard.jar
-```
-
-**10. Turbin serer 실행**
-
-```
-## Terminal 9 (Turbine)
-cd {Project Base Dir}/support/turbine/build/libs
-java -jar support-turbine.jar
-```
-
-**11. 각종 URL(localhost기준)**
+**6. 각종 URL(localhost기준)**
 
 - Eureka 확인 : http://localhost:8761/ 또는 http://localhost:8762/
 - Product List : http://localhost:9000/composite/product/
 - Product : http://localhost:9000/composite/product/{product id}
 - Hystrix dashboard : http://localhost:7979/hystrix
-- Turbine 의 확인 : Hystrix dashboard input 에 http://localhost:8989/ 를 넣고 Monitor Stream 클릭. (단, 최소 한번 이상 API 를 호출한 후에 해야만 정상적인 데이터가 나옴)
+- Turbine 의 확인 : Hystrix dashboard input 에 http://turbine:8989/ 를 넣고 Monitor Stream 클릭. (단, 최소 한번 이상 API 를 호출한 후에 해야만 정상적인 데이터가 나옴)
