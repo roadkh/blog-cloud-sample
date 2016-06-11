@@ -1,0 +1,80 @@
+version: '2'
+services:
+  rabbitmq:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  config:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-config
+    ports:
+      - "8888:8888"
+    volumes:
+      - /home/road/media/Dev/workspace/pilot/blog-cloud/blog-cloud-docker-config:/config
+  peer1:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-peer1
+    ports:
+      - "8761:8761"
+    restart: always
+  peer2:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-peer2
+    ports:
+      - "8762:8762"
+    restart: always
+  product:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-product
+    ports:
+      - "9011:9011"
+    restart: always
+  review:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-review
+    ports:
+      - "9012:9012"
+    restart: always
+  recommendation:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-recommendation
+    ports:
+      - "9013:9013"
+    restart: always
+  composite:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-composite
+    ports:
+      - "9001:9001"
+    restart: always
+  edge:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-edge
+    ports:
+      - "9000:9000"
+    restart: always
+  hystrix:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-hystrix
+    ports:
+      - "7979:7979"
+    restart: always
+  turbine:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-turbine
+    ports:
+      - "8989:8989"
+    restart: always

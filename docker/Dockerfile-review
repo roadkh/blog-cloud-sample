@@ -1,0 +1,7 @@
+FROM road/ubuntu_java8
+
+ADD ./api/review/build/libs/api-review.jar app.jar
+
+EXPOSE 9012
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]

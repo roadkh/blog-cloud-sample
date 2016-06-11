@@ -1,0 +1,7 @@
+FROM road/ubuntu_java8
+
+ADD ./support/turbine/build/libs/support-turbine.jar app.jar
+
+EXPOSE 8989
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]

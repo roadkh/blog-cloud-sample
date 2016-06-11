@@ -1,0 +1,7 @@
+FROM road/ubuntu_java8
+
+ADD ./server/edge/build/libs/server-edge.jar app.jar
+
+EXPOSE 9000
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]

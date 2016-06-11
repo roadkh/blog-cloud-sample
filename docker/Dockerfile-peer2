@@ -1,0 +1,7 @@
+FROM road/ubuntu_java8
+
+ADD ./server/discovery/build/libs/server-discovery.jar app.jar
+
+EXPOSE 8762
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=peer2", "-jar", "/app.jar"]

@@ -2,9 +2,7 @@ spring:
   cloud:
     config:
       uri: http://config:8888
-#      discovery:
-#        enabled: true
-#        service-id: config-server
       failFast: true
   application:
-    name: composite
+    name: discovery
+

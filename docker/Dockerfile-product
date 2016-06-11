@@ -1,0 +1,7 @@
+FROM road/ubuntu_java8
+
+ADD ./api/product/build/libs/api-product.jar app.jar
+
+EXPOSE 9011
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
